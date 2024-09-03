@@ -1,7 +1,13 @@
 import os
 import socket
-from weasyprint import HTML
+from weasyprint import HTML, CSS
+from weasyprint.text.fonts import FontConfiguration
+import logging
 
+# Configure logging
+logging.basicConfig(level=logging.DEBUG)
+
+# font_config = FontConfiguration()
 # Define the path for the Unix socket
 SOCKET_PATH = '/tmp/html_to_pdf_socket'
 
@@ -30,7 +36,7 @@ while True:
         print("Received HTML data.")
 
         # Convert HTML to PDF
-        pdf_output = HTML(string=html_data).write_pdf()
+        pdf_output = HTML(string=html_data, base_url="file:///home/hasan/PhpstormProjects/novin/public/").write_pdf()
 
         # Send the PDF back through the socket
         connection.sendall(pdf_output)
